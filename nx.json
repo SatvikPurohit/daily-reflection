@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "extends": "nx/presets/npm.json",
+  "plugins": ["@nx/next/plugin", "@nx/node/plugin", "@nx/react/plugin"],
+  "cli": {
+    "packageManager": "pnpm",
+    "defaultCollection": "@nx/next"
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "type-check"],
+        "parallel": 4,
+        "cache": true
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "inputs": ["prod", "^prod"],
+      "outputs": ["{projectRoot}/.next", "{projectRoot}/dist"]
+    }
+  }
+}
