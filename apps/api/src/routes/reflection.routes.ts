@@ -1,11 +1,14 @@
 import { Server } from "hapi";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+const APP_PORT = 8080;
 
 export function reflectionRoutes(): Server {
   const server = new Server({
     host: "localhost",
-    port: process.env.APP_PORT || 8080,
+    port: process.env.APP_PORT || APP_PORT,
+    // routes: [],
   });
 
   /**
