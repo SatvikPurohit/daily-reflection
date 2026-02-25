@@ -47,6 +47,7 @@
     "nx:affected:test": "nx affected:test"
   },
   "devDependencies": {
+    "@nx/cli": "^19.0.0",
     "@nx/next": "^19.0.0",
     "@nx/node": "^19.0.0",
     "@nx/react": "^19.0.0",
