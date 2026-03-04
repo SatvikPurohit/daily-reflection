@@ -129,7 +129,11 @@ export class AnalyticsService {
     );
 
     const bestDayIdx = moodPattern.indexOf(Math.max(...moodPattern));
-    const worstDayIdx = moodPattern.indexOf(Math.min(...moodPattern.filter((v) => v > 0)));
+    const nonZeroMoods = moodPattern.filter((v) => v > 0);
+    const worstDayIdx =
+      nonZeroMoods.length > 0
+        ? moodPattern.indexOf(Math.min(...nonZeroMoods))
+        : -1;
 
     return {
       weekNumber,
@@ -183,8 +187,8 @@ export class AnalyticsService {
       avgUrge: Math.round(avgUrge * 10) / 10,
       totalEntries: entries.length,
       moodProgression,
-      strongestUrgeDay: maxUrgeEntry.createdAt.toISOString().split("T")[0] ?? "",
-      bestMoodDay: maxMoodEntry.createdAt.toISOString().split("T")[0] ?? "",
+      strongestUrgeDay: maxUrgeEntry.createdAt.toISOString().split("T")[0],
+      bestMoodDay: maxMoodEntry.createdAt.toISOString().split("T")[0],
     };
   }
 }

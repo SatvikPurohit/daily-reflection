@@ -19,10 +19,11 @@ interface SliderProps {
   value: number;
   onChange: (v: number) => void;
   color: string;
-  description: string;
+  lowLabel: string;
+  highLabel: string;
 }
 
-function ScaleSlider({ label, value, onChange, color, description }: SliderProps) {
+function ScaleSlider({ label, value, onChange, color, lowLabel, highLabel }: SliderProps) {
   return (
     <div>
       <div className="flex justify-between items-center mb-2">
@@ -38,8 +39,8 @@ function ScaleSlider({ label, value, onChange, color, description }: SliderProps
         className="w-full h-2 rounded-full appearance-none cursor-pointer accent-indigo-500"
       />
       <div className="flex justify-between text-xs text-slate-400 mt-1">
-        <span>0 - {description.split("/")[0]}</span>
-        <span>10 - {description.split("/")[1]}</span>
+        <span>0 - {lowLabel}</span>
+        <span>10 - {highLabel}</span>
       </div>
     </div>
   );
@@ -87,14 +88,16 @@ export function ReflectionForm() {
           value={mood}
           onChange={setMood}
           color="text-indigo-600"
-          description="Very low/Excellent"
+          lowLabel="Very low"
+          highLabel="Excellent"
         />
         <ScaleSlider
           label="Urge intensity 🌊"
           value={urge}
           onChange={setUrge}
           color="text-rose-500"
-          description="None/Very strong"
+          lowLabel="None"
+          highLabel="Very strong"
         />
       </div>
 

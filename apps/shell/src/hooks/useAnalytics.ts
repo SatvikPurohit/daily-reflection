@@ -32,7 +32,7 @@ const MONTHLY_STATS_QUERY = `
 `;
 
 export function useDailyStats(date?: string) {
-  const today = date ?? new Date().toISOString().split("T")[0] ?? "";
+  const today = date ?? new Date().toISOString().split("T")[0];
   return useQuery<{ dailyStats: DailyStats }>({
     queryKey: ["dailyStats", DEMO_USER_ID, today],
     queryFn: () =>

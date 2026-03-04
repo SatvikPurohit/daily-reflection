@@ -11,7 +11,9 @@ module.exports = (env, argv) => {
   return {
     entry: "./src/index.tsx",
     output: {
-      publicPath: isDev ? "http://localhost:3001/" : "auto",
+      publicPath: isDev
+        ? process.env.MFE_PUBLIC_PATH ?? "http://localhost:3001/"
+        : "auto",
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[contenthash].js",
       clean: true,

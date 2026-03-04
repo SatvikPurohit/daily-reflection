@@ -3,6 +3,8 @@ import { Insight } from "@repo/shared-types";
 
 type InsightType = "pattern" | "trend" | "suggestion" | "milestone";
 
+const CORRELATION_THRESHOLD = 0.3;
+
 export class InsightService {
   constructor(private readonly prisma: PrismaClient) {}
 
@@ -89,7 +91,7 @@ export class InsightService {
       take: 1,
     });
 
-    if (patterns.length > 0 && patterns[0].correlationWithUrge > 0.3) {
+    if (patterns.length > 0 && patterns[0].correlationWithUrge > CORRELATION_THRESHOLD) {
       insights.push({
         type: "pattern",
         title: `High Urge on ${patterns[0].pattern}s`,

@@ -91,12 +91,17 @@ export class PatternService {
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     for (const [day, moods] of Object.entries(dayMoods)) {
       if (moods.length < 2) continue;
+      const dayIndex = Number(day);
+      // dayOfWeek values come from Date.getDay() which is always 0-6
+      if (dayIndex < 0 || dayIndex > 6) continue;
+      const dayName = dayNames[dayIndex];
+      if (!dayName) continue;
       const avgMood = moods.reduce((s, v) => s + v, 0) / moods.length;
-      const urges = dayUrges[Number(day)] ?? [];
+      const urges = dayUrges[dayIndex] ?? [];
       const avgUrge = urges.length > 0 ? urges.reduce((s, v) => s + v, 0) / urges.length : 0;
       patternsToUpsert.push({
         type: "time",
-        pattern: dayNames[Number(day)] ?? `Day ${day}`,
+        pattern: dayName,
         frequency: moods.length,
         correlationWithMood: normalize(avgMood - overallAvgMood),
         correlationWithUrge: normalize(avgUrge - overallAvgUrge),
