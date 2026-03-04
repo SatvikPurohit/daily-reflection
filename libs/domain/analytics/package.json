@@ -1,0 +1,7 @@
+{
+  "name": "@repo/domain-analytics",
+  "version": "1.0.0",
+  "description": "Domain analytics services",
+  "main": "src/analyticsService.ts",
+  "types": "src/analyticsService.ts"
+}

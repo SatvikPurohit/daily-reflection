@@ -1,18 +1,31 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "description": "Daily Reflection GraphQL API",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc --project tsconfig.json",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "db:setup": "pnpm run db:migrate && pnpm run db:seed",
+    "db:migrate": "prisma migrate dev --schema src/database/schema.prisma",
+    "db:seed": "tsx src/database/seed.ts",
+    "db:drop": "prisma migrate reset --schema src/database/schema.prisma --force",
+    "test": "echo \"No tests configured\" && exit 0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.13.0",
+    "@as-integrations/hapi": "^2.0.1",
     "@hapi/boom": "^10.0.1",
     "@hapi/hapi": "^21.4.6",
-    "@prisma/client": "^7.4.1"
+    "@prisma/client": "^7.4.1",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
     "@types/boom": "^7.3.5",

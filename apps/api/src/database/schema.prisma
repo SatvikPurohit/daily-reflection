@@ -1,3 +1,84 @@
 generator client {
   provider = "prisma-client-js"
 }
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String
+  avatar      String?
+  preferences Json     @default("{\"notificationTime\":\"09:00\",\"theme\":\"light\",\"moodScale\":10,\"urgeScale\":10}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  reflections ReflectionEntry[]
+  patterns    Pattern[]
+  insights    Insight[]
+}
+
+model ReflectionEntry {
+  id          String   @id @default(cuid())
+  userId      String
+  mood        Int
+  urge        Int
+  context     String?
+  triggers    String[]
+  emotions    String[]
+  dayOfWeek   Int
+  weekNumber  Int
+  monthNumber Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, createdAt])
+}
+
+model Pattern {
+  id                  String   @id @default(cuid())
+  userId              String
+  type                String
+  pattern             String
+  frequency           Int      @default(0)
+  correlationWithMood Float    @default(0)
+  correlationWithUrge Float    @default(0)
+  lastOccurrence      DateTime
+  detectedAt          DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Insight {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String
+  title       String
+  description String
+  dataPoints  Json     @default("[]")
+  actionable  Boolean  @default(false)
+  generatedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  eventType String
+  metadata  Json     @default("{}")
+  timestamp DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, eventType])
+}
