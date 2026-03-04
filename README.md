@@ -1,5 +1,11 @@
 # Daily Reflection
 
+## Design
+
+[![Figma](https://img.shields.io/badge/Figma-Design-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/design/daily-reflection)
+
+View the linked Figma file for UI/UX design references and component specifications.
+
 ## Summary
 
 Complete enterprise-grade monorepo setup for Daily Reflection application.
